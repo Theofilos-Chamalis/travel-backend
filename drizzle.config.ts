@@ -1,9 +1,9 @@
 import { config } from 'dotenv';
 config({ path: `.env.${process.env.NODE_ENV}` });
 import type { Config } from 'drizzle-kit';
-import { getConfiguration } from 'src/utils/configuration';
+import { getConfig } from 'src/utils/configuration';
 
-const dbEnvVariables = getConfiguration()?.database;
+const dbEnvVariables = getConfig()?.database;
 
 const dbCredentials = {
   host: dbEnvVariables?.host || '',

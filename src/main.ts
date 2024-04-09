@@ -5,7 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { getConfiguration } from './utils/configuration';
+import { getConfig } from './utils/configuration';
 import { readFileSync } from 'fs';
 import compression from '@fastify/compress';
 import helmet from '@fastify/helmet';
@@ -13,7 +13,7 @@ import { constants } from 'zlib';
 
 async function bootstrap() {
   const bootstrapStartTimestamp = performance.now();
-  const serverConfiguration = getConfiguration().server;
+  const serverConfiguration = getConfig().server;
   const useHttps =
     serverConfiguration.isProduction && serverConfiguration.https;
 
@@ -62,7 +62,7 @@ async function bootstrap() {
     100;
 
   Logger.debug(
-    `Listening at ${serverConfiguration.serverUrl}:${serverConfiguration.port} in ${bootstrapDuration}s`,
+    `💻 Listening at ${serverConfiguration.serverUrl}:${serverConfiguration.port} in ${bootstrapDuration}s`,
   );
 }
 

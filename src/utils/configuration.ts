@@ -1,4 +1,4 @@
-export const getConfiguration = () => {
+export const getConfig = () => {
   const environment = process.env.NODE_ENV || 'development';
   const isProduction = environment === 'production';
 
