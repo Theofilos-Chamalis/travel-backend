@@ -11,6 +11,12 @@ import { getConfig } from './utils/configuration';
 import { readFileSync } from 'fs';
 import { DestinationDto } from './destination/dto/destination.dto';
 
+/**
+ * Application service
+ *
+ * - onApplicationBootstrap() is called when the application has been bootstrapped to seed the database
+ * - getHealth() returns a string with the server status
+ */
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
   private logger: Logger = new Logger('Bootstrap');
@@ -32,7 +38,7 @@ export class AppService implements OnApplicationBootstrap {
       return;
     }
 
-    this.logger.debug('🚧 Bootstrapping application...');
+    this.logger.debug('🚧 Seeding database...');
 
     const existingDestinations = await this.db
       .select()
@@ -40,7 +46,7 @@ export class AppService implements OnApplicationBootstrap {
 
     if (existingDestinations.length > 0) {
       this.logger.debug(
-        '⏩ Bootstrapping skipped as there are existing destinations',
+        '⏩ Seeding skipped as there are existing destinations',
       );
       return;
     }
@@ -53,7 +59,7 @@ export class AppService implements OnApplicationBootstrap {
     const destinationsSeedJson: DestinationDto[] = JSON.parse(destinationsSeed);
 
     if (!destinationsSeedJson || destinationsSeedJson.length === 0) {
-      this.logger.debug('❌ Bootstrapping failed due to missing seed data');
+      this.logger.debug('❌ Seeding failed due to missing seed data');
       return;
     }
 
@@ -82,6 +88,6 @@ export class AppService implements OnApplicationBootstrap {
     );
 
     await Promise.allSettled(dbTransactionPromises);
-    this.logger.debug('✅ Bootstrapping application completed');
+    this.logger.debug('✅ Seeding database completed');
   }
 }

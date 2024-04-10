@@ -1,3 +1,8 @@
+/**
+ * Get the configuration for the server and database from the environment variables
+ *
+ * @returns {{server: {environment: any, isProduction: boolean, port: any, certificatesPath: string, domain: any, serverUrl: string, ipAddress: any, https: boolean}, database: {password: any, port: any, host: any, name: any, connectionUrl: string, user: any}}}
+ */
 export const getConfig = () => {
   const environment = process.env.NODE_ENV || 'development';
   const isProduction = environment === 'production';

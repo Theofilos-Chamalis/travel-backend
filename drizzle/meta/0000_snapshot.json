@@ -1,5 +1,5 @@
 {
-  "id": "34aac5de-452e-4bc6-bd9d-25003cd04f1e",
+  "id": "28b5d8f8-26ac-4ffb-8969-e175ae2e94c0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -67,7 +67,7 @@
         },
         "user_email": {
           "name": "user_email",
-          "type": "varchar",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true
         },
@@ -130,13 +130,13 @@
         },
         "slug": {
           "name": "slug",
-          "type": "varchar",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true
         },
         "name": {
           "name": "name",
-          "type": "varchar",
+          "type": "varchar(128)",
           "primaryKey": false,
           "notNull": true
         },

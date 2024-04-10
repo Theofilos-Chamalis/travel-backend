@@ -11,6 +11,15 @@ import compression from '@fastify/compress';
 import helmet from '@fastify/helmet';
 import { constants } from 'zlib';
 
+/**
+ * Bootstrap the application
+ * - Use the performance API to measure the time it takes to bootstrap the application
+ * - Use the FastifyAdapter to create the application
+ * - useHTTPS if the server is in production and the configuration is set to use HTTPS
+ * - Register the compression and helmet plugins and enable CORS
+ *
+ * @returns {Promise<void>}
+ */
 async function bootstrap() {
   const bootstrapStartTimestamp = performance.now();
   const serverConfiguration = getConfig().server;

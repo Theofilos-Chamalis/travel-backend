@@ -10,6 +10,17 @@ export class DestinationService {
   constructor(
     @Inject(DrizzleAsyncProvider) private db: PostgresJsDatabase<typeof schema>,
   ) {}
+
+  /**
+   * Create a new destination
+   *
+   * - Create a new destination and the appropriate available seats record
+   * - If the destination is not created, return a BadRequestException
+   * - A transaction is used to ensure that both the destination and available seats are created together
+   *
+   * @param {DestinationDto} createDestination
+   * @returns {Promise<any>}
+   */
   async create(createDestination: DestinationDto) {
     try {
       let insertedDestination;
@@ -38,6 +49,13 @@ export class DestinationService {
     }
   }
 
+  /**
+   * Get all destinations
+   *
+   * - Retrieve all destinations from the database
+   *
+   * @returns {Promise<BadRequestException | SelectResult<GetSelectTableSelection<PgTable<{name: "destination", schema: undefined, columns: BuildColumns<"destination", {endingDate: PgDateStringBuilder<{name: "ending_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, price: PgIntegerBuilder<{name: "price", dataType: "number", columnType: "PgInteger", data: number, driverParam: number | string, enumValues: undefined}> & {_: {notNull: true}}, name: PgVarcharBuilder<{name: "name", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, moods: PgJsonbBuilder<{name: "moods", dataType: "json", columnType: "PgJsonb", data: unknown, driverParam: unknown, enumValues: undefined}> & {_: {notNull: true}}, description: PgVarcharBuilder<{name: "description", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, id: PgUUIDBuilder & {_: {notNull: true}}, startingDate: PgDateStringBuilder<{name: "starting_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, slug: PgVarcharBuilder<{name: "slug", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}}, "pg">, dialect: "pg"}> & {endingDate: BuildColumn<"destination", PgDateStringBuilder<{name: "ending_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, price: BuildColumn<"destination", PgIntegerBuilder<{name: "price", dataType: "number", columnType: "PgInteger", data: number, driverParam: number | string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, name: BuildColumn<"destination", PgVarcharBuilder<{name: "name", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">, moods: BuildColumn<"destination", PgJsonbBuilder<{name: "moods", dataType: "json", columnType: "PgJsonb", data: unknown, driverParam: unknown, enumValues: undefined}> & {_: {notNull: true}}, "pg">, description: BuildColumn<"destination", PgVarcharBuilder<{name: "description", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">, id: BuildColumn<"destination", PgUUIDBuilder & {_: {notNull: true}}, "pg">, startingDate: BuildColumn<"destination", PgDateStringBuilder<{name: "starting_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, slug: BuildColumn<"destination", PgVarcharBuilder<{name: "slug", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">}>, "single", "destination" extends string ? Record<"destination", "not-null"> : {}>[]>}
+   */
   async findAll() {
     try {
       const destinations = await this.db.select().from(schema.Destination);
@@ -47,6 +65,14 @@ export class DestinationService {
     }
   }
 
+  /**
+   * Get Destination
+   *
+   * - Use the UUID of the destination to retrieve the destination from the database
+   *
+   * @param {string} id
+   * @returns {Promise<PgSelectWithout<PgSelectBase<"destination", GetSelectTableSelection<PgTable<{name: "destination", schema: undefined, columns: BuildColumns<"destination", {endingDate: PgDateStringBuilder<{name: "ending_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, price: PgIntegerBuilder<{name: "price", dataType: "number", columnType: "PgInteger", data: number, driverParam: number | string, enumValues: undefined}> & {_: {notNull: true}}, name: PgVarcharBuilder<{name: "name", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, moods: PgJsonbBuilder<{name: "moods", dataType: "json", columnType: "PgJsonb", data: unknown, driverParam: unknown, enumValues: undefined}> & {_: {notNull: true}}, description: PgVarcharBuilder<{name: "description", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, id: PgUUIDBuilder & {_: {notNull: true}}, startingDate: PgDateStringBuilder<{name: "starting_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, slug: PgVarcharBuilder<{name: "slug", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}}, "pg">, dialect: "pg"}> & {endingDate: BuildColumn<"destination", PgDateStringBuilder<{name: "ending_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, price: BuildColumn<"destination", PgIntegerBuilder<{name: "price", dataType: "number", columnType: "PgInteger", data: number, driverParam: number | string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, name: BuildColumn<"destination", PgVarcharBuilder<{name: "name", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">, moods: BuildColumn<"destination", PgJsonbBuilder<{name: "moods", dataType: "json", columnType: "PgJsonb", data: unknown, driverParam: unknown, enumValues: undefined}> & {_: {notNull: true}}, "pg">, description: BuildColumn<"destination", PgVarcharBuilder<{name: "description", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">, id: BuildColumn<"destination", PgUUIDBuilder & {_: {notNull: true}}, "pg">, startingDate: BuildColumn<"destination", PgDateStringBuilder<{name: "starting_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, slug: BuildColumn<"destination", PgVarcharBuilder<{name: "slug", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">}>, "single">, false, "where"> | BadRequestException>}
+   */
   async findOne(id: string) {
     try {
       const destinations = await this.db
@@ -59,6 +85,16 @@ export class DestinationService {
     }
   }
 
+  /**
+   * Delete a destination
+   *
+   * - Delete a destination based on its UUID and the associated available seats and bookings for it
+   * - A transaction is used to ensure that all records are deleted together
+   * - The destination is deleted after the available seats and bookings are deleted
+   *
+   * @param {string} id
+   * @returns {Promise<any>}
+   */
   async remove(id: string) {
     try {
       let deletedDestination;

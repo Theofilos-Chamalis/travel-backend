@@ -1,6 +1,13 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
 
+/**
+ * Logger middleware
+ *
+ * - Logs the request and response information
+ * - Formats the logs to improve readability
+ * - Uses the performance API to measure the request duration
+ */
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   private logger: Logger = new Logger('RequestLogger');

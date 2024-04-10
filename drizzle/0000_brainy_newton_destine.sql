@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "available_seats" (
 CREATE TABLE IF NOT EXISTS "booking" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"destination_id" uuid NOT NULL,
-	"user_email" varchar NOT NULL,
+	"user_email" varchar(256) NOT NULL,
 	"num_seats" integer NOT NULL,
 	"confirmed" boolean DEFAULT false NOT NULL,
 	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS "booking" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "destination" (
 	"id" uuid PRIMARY KEY NOT NULL,
-	"slug" varchar NOT NULL,
-	"name" varchar NOT NULL,
+	"slug" varchar(256) NOT NULL,
+	"name" varchar(128) NOT NULL,
 	"description" varchar NOT NULL,
 	"starting_date" date NOT NULL,
 	"ending_date" date NOT NULL,

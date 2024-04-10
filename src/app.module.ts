@@ -20,6 +20,16 @@ import { DestinationGqlModule } from './destination-gql/destination-gql.module';
 import { BookingGqlModule } from './booking-gql/booking-gql.module';
 import { AvailableSeatsGqlModule } from './available-seats-gql/available-seats-gql.module';
 
+/**
+ * Application module
+ *
+ * - Import the GraphQLModule and configure it to use the MercuriusFederationDriver
+ * - Import the ConfigModule and configure it to use the appropriate environment file
+ * - Import the ThrottlerModule if the server is in production to limit the number of requests
+ * - Import the DrizzleModule to handle the DB connection
+ * - Import the DestinationModule, BookingModule, and AvailableSeatsModule as HTTP REST API modules
+ * - Import the DestinationGqlModule, BookingGqlModule, and AvailableSeatsGqlModule as GraphQL modules
+ */
 @Module({
   imports: [
     GraphQLModule.forRoot<MercuriusFederationDriverConfig>({

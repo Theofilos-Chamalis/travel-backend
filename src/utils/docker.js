@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-
+/**
+ * This script creates a persistent docker container from the specified environment variables that hosts the PostgreSQL database.
+ */
 const { exec } = require('child_process');
 
 const { DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env;
