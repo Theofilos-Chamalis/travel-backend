@@ -5,9 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { getConfig } from './utils/configuration';
 import { GraphQLModule } from '@nestjs/graphql';
 import {
-  ApolloFederationDriver,
-  ApolloFederationDriverConfig,
-} from '@nestjs/apollo';
+  MercuriusFederationDriver,
+  MercuriusFederationDriverConfig,
+} from '@nestjs/mercurius';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { LoggerMiddleware } from './middleware/logger.middleware';
@@ -22,11 +22,11 @@ import { AvailableSeatsGqlModule } from './available-seats-gql/available-seats-g
 
 @Module({
   imports: [
-    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
-      driver: ApolloFederationDriver,
+    GraphQLModule.forRoot<MercuriusFederationDriverConfig>({
+      driver: MercuriusFederationDriver,
       autoSchemaFile: true,
       sortSchema: true,
-      playground: !getConfig().server.isProduction,
+      ide: !getConfig().server.isProduction,
     }),
     ConfigModule.forRoot({
       envFilePath: `.env.${getConfig().server.environment}`,
