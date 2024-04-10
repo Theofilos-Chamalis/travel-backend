@@ -45,7 +45,7 @@ async function bootstrap() {
         [constants.BROTLI_PARAM_QUALITY]: 3,
       },
     }),
-    app.register(helmet),
+    serverConfiguration.isProduction ? app.register(helmet) : [],
   ]);
   app.enableCors();
   app.useGlobalPipes(
