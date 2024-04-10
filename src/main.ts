@@ -10,6 +10,7 @@ import { readFileSync } from 'fs';
 import compression from '@fastify/compress';
 import helmet from '@fastify/helmet';
 import { constants } from 'zlib';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 /**
  * Bootstrap the application
@@ -17,6 +18,7 @@ import { constants } from 'zlib';
  * - Use the FastifyAdapter to create the application
  * - useHTTPS if the server is in production and the configuration is set to use HTTPS
  * - Register the compression and helmet plugins and enable CORS
+ * - Serve an OpenAPI (Swagger) documentation if the server is not in production
  *
  * @returns {Promise<void>}
  */
@@ -63,6 +65,16 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+
+  if (!serverConfiguration.isProduction) {
+    const config = new DocumentBuilder()
+      .setTitle('Travel Backend')
+      .setDescription('The REST API for the travel backend')
+      .setVersion('0.0.1')
+      .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('swagger', app, document);
+  }
 
   await app.listen(serverConfiguration.port, '0.0.0.0');
 

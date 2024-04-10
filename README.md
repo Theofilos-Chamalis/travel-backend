@@ -70,8 +70,10 @@ $ npm run migrations:push
 # development (database is seeded with travel/destination information from the seed folder)
 $ npm run dev
 
-# test the REST api with a REST client (e.g. postman)
-# test the GraphQL api with a GraphQL client (e.g. postman) or GraphiQL
+# test the REST api with a REST client (e.g. postman) or by using Swagger (development only)
+http://localhost:3000/swagger
+
+# test the GraphQL api with a GraphQL client (e.g. postman) or GraphiQL (development only)
 http://localhost:3000/graphiql
 
 # production mode
