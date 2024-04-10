@@ -71,11 +71,22 @@ export const Booking = pgTable('booking', {
   ),
 });
 
+/**
+ * Destination Table Relations
+ *
+ * - One to One relation with AvailableSeats table
+ * - One to Many relation with Booking table
+ */
 export const DestinationRelations = relations(Destination, ({ one, many }) => ({
   availableSeats: one(AvailableSeats),
   booking: many(Booking),
 }));
 
+/**
+ * Booking Table Relations
+ *
+ * - Many to One relation with Destination table
+ */
 export const BookingRelations = relations(Booking, ({ one }) => ({
   destination: one(Destination, {
     fields: [Booking.destinationId],
