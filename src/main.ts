@@ -63,6 +63,7 @@ async function bootstrap() {
 
   Logger.debug(
     `💻 Listening at ${serverConfiguration.serverUrl}:${serverConfiguration.port} in ${bootstrapDuration}s`,
+    'Startup',
   );
 }
 

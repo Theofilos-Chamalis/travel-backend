@@ -22,7 +22,7 @@ export class LoggerMiddleware implements NestMiddleware {
       if (req.body) {
         reqInfoToLog['body'] = req.body;
       }
-      const reqLogString = ` - REQUEST ${formatLogsToString(reqInfoToLog)}`;
+      const reqLogString = `⬇️  REQUEST ${formatLogsToString(reqInfoToLog)}`;
       this.logger.debug(reqLogString);
     });
 
@@ -36,7 +36,14 @@ export class LoggerMiddleware implements NestMiddleware {
           statusCode: res.statusCode + '',
           duration: reqDuration + 's',
         };
-        const resLogString = ` - RESPONSE ${formatLogsToString(resInfoToLog)}`;
+
+        let statusEmoji = '✅';
+
+        if (res.statusCode > 299) {
+          statusEmoji = '❌';
+        }
+
+        const resLogString = `${statusEmoji} RESPONSE ${formatLogsToString(resInfoToLog)}`;
         this.logger.debug(resLogString);
       }, 0);
     });
