@@ -77,7 +77,7 @@ http://localhost:3000/swagger
 http://localhost:3000/graphiql
 
 # production mode
-$ npm run prod
+$ npm run build && npm run prod
 ```
 
 ## Test
