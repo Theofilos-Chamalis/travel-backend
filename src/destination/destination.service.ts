@@ -75,11 +75,9 @@ export class DestinationService {
    */
   async findOne(idOrSlug: string) {
     try {
-      const isUUID =
-        idOrSlug &&
-        idOrSlug.match(
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
-        );
+      const isUUID = idOrSlug.match(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      );
 
       let destinations = [];
       if (isUUID) {
