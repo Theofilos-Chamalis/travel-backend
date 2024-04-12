@@ -17,8 +17,8 @@ export class DestinationController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.destinationService.findOne(id);
+  findOne(@Param('id') idOrSlug: string) {
+    return this.destinationService.findOne(idOrSlug);
   }
 
   @Delete(':id')

@@ -68,17 +68,32 @@ export class DestinationService {
   /**
    * Get Destination
    *
-   * - Use the UUID of the destination to retrieve the destination from the database
+   * - Use the UUID or slug of the destination to retrieve the destination from the database
    *
-   * @param {string} id
+   * @param {string} idOrSlug
    * @returns {Promise<PgSelectWithout<PgSelectBase<"destination", GetSelectTableSelection<PgTable<{name: "destination", schema: undefined, columns: BuildColumns<"destination", {endingDate: PgDateStringBuilder<{name: "ending_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, price: PgIntegerBuilder<{name: "price", dataType: "number", columnType: "PgInteger", data: number, driverParam: number | string, enumValues: undefined}> & {_: {notNull: true}}, name: PgVarcharBuilder<{name: "name", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, moods: PgJsonbBuilder<{name: "moods", dataType: "json", columnType: "PgJsonb", data: unknown, driverParam: unknown, enumValues: undefined}> & {_: {notNull: true}}, description: PgVarcharBuilder<{name: "description", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, id: PgUUIDBuilder & {_: {notNull: true}}, startingDate: PgDateStringBuilder<{name: "starting_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, slug: PgVarcharBuilder<{name: "slug", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}}, "pg">, dialect: "pg"}> & {endingDate: BuildColumn<"destination", PgDateStringBuilder<{name: "ending_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, price: BuildColumn<"destination", PgIntegerBuilder<{name: "price", dataType: "number", columnType: "PgInteger", data: number, driverParam: number | string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, name: BuildColumn<"destination", PgVarcharBuilder<{name: "name", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">, moods: BuildColumn<"destination", PgJsonbBuilder<{name: "moods", dataType: "json", columnType: "PgJsonb", data: unknown, driverParam: unknown, enumValues: undefined}> & {_: {notNull: true}}, "pg">, description: BuildColumn<"destination", PgVarcharBuilder<{name: "description", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">, id: BuildColumn<"destination", PgUUIDBuilder & {_: {notNull: true}}, "pg">, startingDate: BuildColumn<"destination", PgDateStringBuilder<{name: "starting_date", dataType: "string", columnType: "PgDateString", data: string, driverParam: string, enumValues: undefined}> & {_: {notNull: true}}, "pg">, slug: BuildColumn<"destination", PgVarcharBuilder<{name: "slug", dataType: "string", columnType: "PgVarchar", data: [string, ...string[]][number], driverParam: string, enumValues: [string, ...string[]]}> & {_: {notNull: true}}, "pg">}>, "single">, false, "where"> | BadRequestException>}
    */
-  async findOne(id: string) {
+  async findOne(idOrSlug: string) {
     try {
-      const destinations = await this.db
-        .select()
-        .from(schema.Destination)
-        .where(eq(schema.Destination.id, id));
+      const isUUID =
+        idOrSlug &&
+        idOrSlug.match(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+        );
+
+      let destinations = [];
+      if (isUUID) {
+        destinations = await this.db
+          .select()
+          .from(schema.Destination)
+          .where(eq(schema.Destination.id, idOrSlug));
+      } else {
+        destinations = await this.db
+          .select()
+          .from(schema.Destination)
+          .where(eq(schema.Destination.slug, idOrSlug));
+      }
+
       return destinations;
     } catch (error) {
       return new BadRequestException(error);
