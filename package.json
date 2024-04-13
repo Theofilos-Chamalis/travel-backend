@@ -21,9 +21,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "start:postgres:dev": "node --env-file=.env.development ./src/utils/docker",
     "start:postgres:prod": "node --env-file=.env.production ./src/utils/docker",
-    "migrations:generate": "cross-env NODE_ENV=development npx drizzle-kit generate:pg",
-    "migrations:push": "cross-env NODE_ENV=development npx drizzle-kit push:pg",
-    "migrations:drop": "cross-env NODE_ENV=development npx drizzle-kit drop"
+    "migrations:generate:dev": "cross-env NODE_ENV=development npx drizzle-kit generate:pg",
+    "migrations:push:dev": "cross-env NODE_ENV=development npx drizzle-kit push:pg",
+    "migrations:drop:dev": "cross-env NODE_ENV=development npx drizzle-kit drop",
+    "migrations:generate:prod": "cross-env NODE_ENV=production npx drizzle-kit generate:pg",
+    "migrations:push:prod": "cross-env NODE_ENV=production npx drizzle-kit push:pg",
+    "migrations:drop:prod": "cross-env NODE_ENV=production npx drizzle-kit drop"
   },
   "dependencies": {
     "@apollo/subgraph": "2.2.3",

@@ -55,13 +55,13 @@ DB_AUTH=true
 $ docker --version
 
 # spin up docker container
-$ npm run start:postgres
+$ npm run start:postgres:dev
 
 # generate new migrations (when db schema changes)
-$ npm run migrations:generate
+$ npm run migrations:generate:dev
 
 # run migrations and update the db (1st time or when schema changes)
-$ npm run migrations:push
+$ npm run migrations:push:dev
 ```
 
 ## Running the app
